@@ -1,6 +1,6 @@
 <?php
 
-namespace Spider\Mixin\Element;
+namespace Spider\Mixins\Element;
 
 
 trait HasCleaner {

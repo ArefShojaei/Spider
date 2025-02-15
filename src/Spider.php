@@ -7,11 +7,12 @@ use DOMXPath;
 use Exception;
 use Spider\{
     Page,
-    Request
+    Request,
+    Interfaces\SpiderInterface
 };
 
 
-final class Spider {
+final class Spider implements SpiderInterface {
     private $url;
 
     public function __construct(string $url) {

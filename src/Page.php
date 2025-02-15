@@ -4,9 +4,10 @@ namespace Spider;
 
 use DOMDocument;
 use DOMXPath;
+use Spider\Interfaces\PageInterface;
 
 
-final class Page {
+final class Page implements PageInterface {
     private DOMDocument $dom;
 
     private DOMXPath $xpath;

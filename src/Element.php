@@ -4,14 +4,15 @@ namespace Spider;
 
 use DOMDocument;
 use DOMNode;
-use Spider\Mixin\Element\{
+use Spider\Mixins\Element\{
     HasAttribute,
     HasCleaner,
     HasContent
 };
+use Spider\Interfaces\ElementInterface;
 
 
-final class Element {
+final class Element implements ElementInterface {
     use HasAttribute, HasCleaner, HasContent;
 
     
