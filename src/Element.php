@@ -70,4 +70,24 @@ final class Element {
 
         return in_array($class, $classes) ? true : false;
     }
+
+    public function addID(string $id): self {
+        $this->node->setAttribute("id", $id);
+
+        return $this;
+    }
+
+    public function removeID(): self {
+        $this->node->removeAttribute("id");
+
+        return $this;
+    }
+
+    public function hasID(string $id): bool {
+        $currentID = $this->node->getAttribute("id");
+        
+        if (!$currentID) return false;
+
+        return $currentID === $id ? true : false;
+    }
 }
