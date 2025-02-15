@@ -90,4 +90,15 @@ final class Element {
 
         return $currentID === $id ? true : false;
     }
+
+    public function empty(): self {
+        $this->node->nodeValue = "";
+        $this->node->textContent = "";
+
+        return $this;
+    }
+
+    public function remove(): void {
+        $this->node->parentNode->removeChild($this->node);
+    }
 }
