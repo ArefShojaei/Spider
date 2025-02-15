@@ -36,4 +36,38 @@ final class Element {
 
         return $attributes;
     }
+
+    public function addClass(string ...$classes): self {
+        $currentClasses = $this->node->getAttribute("class");
+    
+        $newClasses = trim($currentClasses . " " . implode(" ", $classes));
+
+        $this->node->setAttribute("class", $newClasses);
+    
+
+        return $this;
+    }
+
+    public function removeClass(string ...$classes): self {
+        $currentClasses = $this->node->getAttribute("class");
+
+        $newClasses = "";
+
+        foreach ($classes as $class) {
+            $newClasses = str_replace($class, "", $currentClasses);
+        }
+
+        $this->node->setAttribute("class", trim($newClasses));
+
+
+        return $this;
+    }
+
+    public function hasClass(string $class): bool {
+        $currentClasses = $this->node->getAttribute("class");
+        
+        $classes = explode(" ", $currentClasses);
+
+        return in_array($class, $classes) ? true : false;
+    }
 }
