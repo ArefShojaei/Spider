@@ -24,4 +24,16 @@ final class Element {
     public function html(): string {
         return $this->dom->saveHTML($this->node);
     }
+
+    public function attr(string $key = null): string|array {
+        $attributes = [];
+
+        foreach ($this->node->attributes as $attribute) {
+            if (isset($key) && $attribute->nodeName === $key) return $attribute->textContent;
+
+            $attributes[$attribute->nodeName] = $attribute->nodeValue;
+        }
+
+        return $attributes;
+    }
 }
