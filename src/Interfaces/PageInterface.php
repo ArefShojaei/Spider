@@ -25,6 +25,12 @@ interface HasIterableInterface {
 
 interface HasChildrenInterface {
     public function children(): array;
+    
+    public function eq(int $index): ?Element;
+
+    public function first(): ?Element;
+    
+    public function last(): ?Element;
 }
 
 interface PageInterface extends 
