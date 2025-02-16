@@ -3,13 +3,16 @@
 namespace Spider\Interfaces;
 
 use Closure;
-use Spider\Element;
+use Spider\{
+    Element,
+    Page
+};
 
 
 interface HasSelectorInterface {
     public function find(string $selector): Element;
     
-    public function findAll(string $selector): self;
+    public function findAll(string $selector): Page;
 }
 
 interface HasIterableInterface {

@@ -2,7 +2,10 @@
 
 namespace Spider\Mixins\Page;
 
-use Spider\Element;
+use Spider\{
+    Element,
+    Page
+};
 
 
 trait HasSelector {
@@ -16,7 +19,7 @@ trait HasSelector {
         return new Element($node, $this->dom);
     }
 
-    public function findAll(string $selector): self {
+    public function findAll(string $selector): Page {
         $nodes = $this->xpath->query($selector);
     
         foreach ($nodes as $node) {
