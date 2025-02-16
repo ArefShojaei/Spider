@@ -5,10 +5,10 @@ namespace Spider\Mixins\Element;
 
 trait HasContent {
     public function text(): string {
-        return $this->node->textContent;
+        return trim($this->node->textContent);
     }
 
     public function html(): string {
-        return $this->dom->saveHTML($this->node);
+        return trim($this->dom->saveHTML($this->node));
     }
 }
