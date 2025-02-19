@@ -3,19 +3,7 @@
 namespace Spider\Mixins\Element;
 
 
-trait HasAttribute {
-    public function attr(string $key = null): string|array {
-        $attributes = [];
-
-        foreach ($this->node->attributes as $attribute) {
-            if (isset($key) && $attribute->nodeName === $key) return $attribute->textContent;
-
-            $attributes[$attribute->nodeName] = $attribute->nodeValue;
-        }
-
-        return $attributes;
-    }
-
+trait HasClassAttribute {
     public function addClass(string ...$classes): self {
         $currentClasses = $this->node->getAttribute("class");
     
@@ -49,7 +37,9 @@ trait HasAttribute {
 
         return in_array($class, $classes) ? true : false;
     }
+}
 
+trait HasIdAttribute {
     public function addID(string $id): self {
         $this->node->setAttribute("id", $id);
 
@@ -68,5 +58,22 @@ trait HasAttribute {
         if (!$currentID) return false;
 
         return $currentID === $id ? true : false;
+    }
+}
+
+
+trait HasAttribute {
+    use HasClassAttribute, HasIdAttribute;
+
+    public function attr(string $key = null): string|array {
+        $attributes = [];
+
+        foreach ($this->node->attributes as $attribute) {
+            if (isset($key) && $attribute->nodeName === $key) return $attribute->textContent;
+
+            $attributes[$attribute->nodeName] = $attribute->nodeValue;
+        }
+
+        return $attributes;
     }
 }
