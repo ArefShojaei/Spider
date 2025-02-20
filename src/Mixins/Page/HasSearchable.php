@@ -8,7 +8,7 @@ use Spider\{
 };
 
 
-trait HasSelector {
+trait HasSearchable {
     private array $nodes = [];
 
     public function find(string $selector): Element {

@@ -9,7 +9,7 @@ use Spider\{
 };
 
 
-interface HasSelectorInterface {
+interface HasSearchableInterface {
     public function find(string $selector): Element;
     
     public function findAll(string $selector): Page;
@@ -34,7 +34,7 @@ interface HasChildrenInterface {
 }
 
 interface PageInterface extends 
-    HasSelectorInterface, 
+    HasSearchableInterface, 
     HasIterableInterface,
     HasChildrenInterface {
         public function export(string $location): bool;

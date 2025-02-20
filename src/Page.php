@@ -8,12 +8,12 @@ use Spider\Interfaces\PageInterface;
 use Spider\Mixins\Page\{
     HasChildren,
     HasIterable,
-    HasSelector
+    HasSearchable,
 };
 
 
 final class Page implements PageInterface {
-    use HasSelector, HasIterable, HasChildren;
+    use HasSearchable, HasIterable, HasChildren;
 
 
     private DOMDocument $dom;
