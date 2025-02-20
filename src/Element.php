@@ -7,13 +7,14 @@ use DOMNode;
 use Spider\Mixins\Element\{
     HasAttribute,
     HasCleaner,
-    HasContent
+    HasContent,
+    HasTraversable
 };
 use Spider\Interfaces\ElementInterface;
 
 
 final class Element implements ElementInterface {
-    use HasAttribute, HasCleaner, HasContent;
+    use HasAttribute, HasCleaner, HasContent, HasTraversable;
 
     
     private DOMNode $node;

@@ -2,6 +2,8 @@
 
 namespace Spider\Interfaces;
 
+use DOMElement;
+
 
 interface ElementClassAttributeInterface {
     public function addClass(string ...$classes): self;
@@ -37,7 +39,13 @@ interface ElementContentInterface {
     public function html(?string $value = null): string|bool;
 }
 
+interface ElementTraversableInterface {
+    public function parent(): DOMElement;
+}
+
+
 interface ElementInterface extends 
     ElementAttributeInterface,
     ElementCleanerInterface,
-    ElementContentInterface {}
+    ElementContentInterface,
+    ElementTraversableInterface {}
