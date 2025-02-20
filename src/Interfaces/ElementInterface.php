@@ -32,9 +32,9 @@ interface ElementCleanerInterface {
 }
 
 interface ElementContentInterface {
-    public function text(): string;
+    public function text(?string $value = null): string|bool;
     
-    public function html(): string;
+    public function html(?string $value = null): string|bool;
 }
 
 interface ElementInterface extends 
