@@ -61,15 +61,24 @@ trait HasIdAttribute {
     }
 }
 
+trait HasMetaAttribute {
+    private function addAttribute(string $attribute, array $values): void {
+        $this->node->setAttribute($attribute, implode(" ", $values));
+    }
+}
+
 
 trait HasAttribute {
-    use HasClassAttribute, HasIdAttribute;
+    use HasClassAttribute, HasIdAttribute, HasMetaAttribute;
 
-    public function attr(string $key = null): string|array {
+    public function attr(string $key = null, string ...$values): string|array {
         $attributes = [];
 
         foreach ($this->node->attributes as $attribute) {
+            if (isset($key) && count($values)) $this->addAttribute($key, $values);
+            
             if (isset($key) && $attribute->nodeName === $key) return $attribute->textContent;
+
 
             $attributes[$attribute->nodeName] = $attribute->nodeValue;
         }
