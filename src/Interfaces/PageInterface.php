@@ -36,4 +36,6 @@ interface HasChildrenInterface {
 interface PageInterface extends 
     HasSelectorInterface, 
     HasIterableInterface,
-    HasChildrenInterface {}
+    HasChildrenInterface {
+        public function export(string $location): bool;
+    }

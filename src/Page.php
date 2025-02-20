@@ -25,4 +25,12 @@ final class Page implements PageInterface {
         $this->dom = $dom;
         $this->xpath = $xpath;
     }
+
+    public function export(string $location): bool {
+        $html = trim($this->dom->saveHTML());
+        
+        $encodedHtmlContent = html_entity_decode($html, encoding:"UTF-8");
+
+        return file_put_contents($location, $encodedHtmlContent);
+    }
 }
