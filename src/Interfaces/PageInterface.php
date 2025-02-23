@@ -5,11 +5,12 @@ namespace Spider\Interfaces;
 use Closure;
 use Spider\{
     Element,
+    Page,
 };
 
 
 interface HasSearchableInterface {
-    public function select(string $selector): void;
+    public function select(string $selector): Page|Element;
 }
 
 interface HasIterableInterface {

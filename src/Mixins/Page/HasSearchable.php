@@ -35,11 +35,11 @@ trait HasSearchable {
     /**
      * @param $selector Css-selector
      */
-    public function select(string $selector): void {
+    public function select(string $selector): Page|Element {
         $xpathSelector = Selector::convert($selector);
     
         $nodes = $this->xpath->query($xpathSelector);
 
-        count($nodes) > self::SINGLE_ELMENT_FOUND_COUNT ? $this->findAll($nodes) : $this->find($nodes);
+        return count($nodes) > self::SINGLE_ELMENT_FOUND_COUNT ? $this->findAll($nodes) : $this->find($nodes);
     }
 }
