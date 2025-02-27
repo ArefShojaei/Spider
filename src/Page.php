@@ -7,13 +7,14 @@ use DOMXPath;
 use Spider\Interfaces\PageInterface;
 use Spider\Mixins\Page\{
     HasChildren,
+    HasHTMLEncodable,
     HasIterable,
     HasSearchable,
 };
 
 
 final class Page implements PageInterface {
-    use HasSearchable, HasIterable, HasChildren;
+    use HasSearchable, HasIterable, HasChildren, HasHTMLEncodable;
 
 
     private DOMDocument $dom;
@@ -26,11 +27,19 @@ final class Page implements PageInterface {
         $this->xpath = $xpath;
     }
 
+    public function display(): string {
+        $html = trim($this->dom->saveHTML());
+        
+        $decodedHtmlContent = $this->decodeHTML($html);
+
+        return $decodedHtmlContent;
+    }
+
     public function export(string $location): bool {
         $html = trim($this->dom->saveHTML());
         
-        $encodedHtmlContent = html_entity_decode($html, encoding:"UTF-8");
+        $decodedHtmlContent = $this->decodeHTML($html);
 
-        return file_put_contents($location, $encodedHtmlContent);
+        return file_put_contents($location, $decodedHtmlContent);
     }
 }
