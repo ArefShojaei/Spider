@@ -18,13 +18,17 @@ trait HasSearchable {
     private array $nodes = [];
 
 
-    private function find(DOMNodeList $nodes): Element {
+    public function find(string $selector): Element {
+        $nodes = $this->query($selector);
+
         $node = $nodes->item(self::FIRST_ELEMENT_ITEM);
 
         return new Element($node, $this->dom);
     }
 
-    private function findAll(DOMNodeList $nodes): Page {
+    public function findAll(string $selector): Page {
+        $nodes = $this->query($selector);
+
         foreach ($nodes as $node) {
             $this->nodes[] = $node;
         }
@@ -35,11 +39,9 @@ trait HasSearchable {
     /**
      * @param $selector Css-selector
      */
-    public function select(string $selector): Page|Element {
+    private function query(string $selector): DOMNodeList {
         $xpathSelector = Selector::convert($selector);
     
-        $nodes = $this->xpath->query($xpathSelector);
-
-        return count($nodes) > self::SINGLE_ELMENT_FOUND_COUNT ? $this->findAll($nodes) : $this->find($nodes);
+        return $this->xpath->query($xpathSelector);
     }
 }

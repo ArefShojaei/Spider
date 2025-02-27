@@ -10,7 +10,9 @@ use Spider\{
 
 
 interface HasSearchableInterface {
-    public function select(string $selector): Page|Element;
+    public function find(string $selector): Element;
+    
+    public function findAll(string $selector): Page;
 }
 
 interface HasIterableInterface {
