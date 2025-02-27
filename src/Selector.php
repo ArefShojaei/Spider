@@ -30,12 +30,12 @@ class Selector implements SelectorInterface {
     private static function transformTags(): void {
         $selector = self::$selector;
 
-        $selector = preg_replace('/\s+/', ' ', $selector);
-        $selector = preg_replace('/\s+>\s*/', self::ABSOLUTE_AXIS, $selector);
-        $selector = preg_replace('/\s+/', self::RELATIVE_AXIS, $selector);
+        $selector = preg_replace('/\s+/', ' ', $selector); # Normilize whitespaces
+        $selector = preg_replace('/\s+/', self::RELATIVE_AXIS, $selector); # parent
+        $selector = preg_replace('/\s+>\s*/', self::ABSOLUTE_AXIS, $selector); # parent > child
 
-        $selector = preg_replace('/\s+\~\s*(\w+)\s*/', '/following-sibling::$1', $selector);
-        $selector = preg_replace('/\s+\+\s*(\w+)\s*/', '/following-sibling::$1[1]', $selector);
+        $selector = preg_replace('/\s+\~\s*(\w+)\s*/', '/following-sibling::$1', $selector); # parent ~ child
+        $selector = preg_replace('/\s+\+\s*(\w+)\s*/', '/following-sibling::$1[1]', $selector); # paretn * child
 
         self::$selector = $selector;
     }
@@ -43,13 +43,12 @@ class Selector implements SelectorInterface {
     private static function transformAttributes(): void {
         $selector = self::$selector;
 
-        $selector = preg_replace("/(\w+)\[(\w+)\]/", "$1[@$2]", $selector);
-        $selector = preg_replace("/(\w+)\[(\w+)=[\"\'](\w+)[\"\']\]/", "$1[@$2=\"$3\"]", $selector);
-        $selector = preg_replace("/(\w+)\[(\w+)^=[\"\'](\w+)[\"\']\]/", "$1[@starts-with(@$2, \"$3\")]", $selector);
-        $selector = preg_replace("/(\w+)\[(\w+)$=[\"\'](\w+)[\"\']\]/", "$1[@ends-with(@$2, \"$3\")]", $selector);
-        $selector = preg_replace("/(\w+)\[(\w+)*=[\"\'](\w+)[\"\']\]/", "$1[@contains(@$2, \"$3\")]", $selector);
-        $selector = preg_replace("/(\w+)\[(\w+)~=[\"\'](\w+)[\"\']\]/", "$1[@contains(@$2, \"$3\")]", $selector);
-        $selector = preg_replace("/:not\((\w+)\)/", "[@not(@$1)]", $selector);
+        $selector = preg_replace("/(\w+)\[(\w+)\]/", "$1[@$2]", $selector); # input[attr]
+        $selector = preg_replace("/(\w+)\[(\w+)=[\"\'](\w+)[\"\']\]/", "$1[@$2=\"$3\"]", $selector); # input[attr=value]
+        $selector = preg_replace("/(\w+)\[(\w+)^=[\"\'](\w+)[\"\']\]/", "$1[@starts-with(@$2, \"$3\")]", $selector); # input[attr^=value]
+        $selector = preg_replace("/(\w+)\[(\w+)$=[\"\'](\w+)[\"\']\]/", "$1[@ends-with(@$2, \"$3\")]", $selector); # input[attr$=value]
+        $selector = preg_replace("/(\w+)\[(\w+)*=[\"\'](\w+)[\"\']\]/", "$1[@contains(@$2, \"$3\")]", $selector); # input[attr*=value]
+        $selector = preg_replace("/(\w+)\[(\w+)~=[\"\'](\w+)[\"\']\]/", "$1[@contains(@$2, \"$3\")]", $selector); # input[attr~=value]
     
         self::$selector = $selector;
     }
@@ -57,8 +56,8 @@ class Selector implements SelectorInterface {
     private static function transformPassports(): void {
         $selector = self::$selector;
 
-        $selector = preg_replace('/\#(\w+)/', '*[@id="$1"]', $selector);
-        $selector = preg_replace('/\.(\w+)/', '*[@class="$1"]', $selector);
+        $selector = preg_replace('/\#(\w+)/', '*[@id="$1"]', $selector); #     .class
+        $selector = preg_replace('/\.(\w+)/', '*[@class="$1"]', $selector); #  #id
 
         self::$selector = $selector;
     }
@@ -66,9 +65,10 @@ class Selector implements SelectorInterface {
     private static function transformChildren(): void {
         $selector = self::$selector;
 
-        $selector = preg_replace("/:nth-child\((\d+)\)/", "[$1]", $selector);
-        $selector = preg_replace("/(\w+):first-child/", "*[1][name()=\"$1\"]", $selector);
-        $selector = preg_replace("/(\w+):last-child/", "*[last()][name()=\"$1\"]", $selector);
+        $selector = preg_replace("/:nth-child\((\d+)\)/", "[$1]", $selector); # :nth-child(n)
+        $selector = preg_replace("/(\w+):first-child/", "*[1][name()=\"$1\"]", $selector); # :first-child
+        $selector = preg_replace("/(\w+):last-child/", "*[last()][name()=\"$1\"]", $selector); # :last-child
+        $selector = preg_replace("/:not\((\w+)\)/", "[@not(@$1)]", $selector); # parent children:not(child)
 
         self::$selector = $selector;
     }
