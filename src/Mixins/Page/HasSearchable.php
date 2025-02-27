@@ -13,8 +13,6 @@ use Spider\{
 trait HasSearchable {
     private const FIRST_ELEMENT_ITEM = 0;
 
-    private const SINGLE_ELMENT_FOUND_COUNT = 1;
-
     private array $nodes = [];
 
 
