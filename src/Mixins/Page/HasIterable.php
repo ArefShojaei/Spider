@@ -13,6 +13,8 @@ trait HasIterable {
 
             call_user_func($callback, $key, $nodeInstance);
         }
+
+        $this->nodes = [];
     }
 
     public function map(Closure $callback): array {
