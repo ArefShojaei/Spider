@@ -13,26 +13,37 @@ use Spider\{
 
 
 final class Spider implements SpiderInterface {
-    private $url;
+    public function loadHTML(string $url): Page {
+        try {
+            $content = Request::get($url);
 
-    public function __construct(string $url) {
-        $this->url = $url;
+            [$dom, $xpath] = $this->createDOM($content);
+        
+            return new Page($dom, $xpath);
+        } catch (Exception $error) {
+            throw new Exception("[ERROR] HTML Loader: " . $error->getMessage());
+        }
     }
 
-    public function loadHTML(): Page {
+    public function loadFile(string $src): Page {
         try {
-            $content = Request::get($this->url);
+            $content = Request::get($src);
 
-            $dom = new DOMDocument(encoding: "UTF-8");
-                
-            @$dom->loadHTML($content);
-        
-            $xpath = new DOMXPath($dom);
-        
+            [$dom, $xpath] = $this->createDOM($content);
 
             return new Page($dom, $xpath);
         } catch (Exception $error) {
-            throw new Exception("[ERROR] " . $error->getMessage());
+            throw new Exception("[ERROR] File Loader: " . $error->getMessage());
         }
+    }
+
+    private function createDOM(string $content): array {
+        $dom = new DOMDocument(encoding: "UTF-8");
+                
+        @$dom->loadHTML($content);
+    
+        $xpath = new DOMXPath($dom);
+
+        return [$dom, $xpath];
     }
 }
