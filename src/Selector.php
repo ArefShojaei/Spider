@@ -58,11 +58,11 @@ class Selector implements SelectorInterface {
     private static function transformPassports(): void {
         $selector = self::$selector;
 
-        $selector = preg_replace('/([\w_-]+)\#([\w_-]+)/', '$1[@id="$2"]', $selector); #     .class
-        $selector = preg_replace('/\#([\w_-]+)/', '*[@id="$1"]', $selector); #     .class
+        $selector = preg_replace('/([\w_-]+)\#([\w_-]+)/', '$1[@id="$2"]', $selector); #     element#id
+        $selector = preg_replace('/\#([\w_-]+)/', '*[@id="$1"]', $selector); #     #id
         
-        $selector = preg_replace('/([\w_-]+)\.([\w_-]+)/', '$1[@class="$2"]', $selector); #  #id
-        $selector = preg_replace('/\.([\w_-]+)/', '*[@class="$1"]', $selector); #  #id
+        $selector = preg_replace('/([\w_-]+)\.([\w_-]+)/', '$1[contains(@class, "$1")]', $selector); #  element.class
+        $selector = preg_replace('/\.([\w_-]+)/', '*[contains(@class, "$1")]', $selector); #  .class
 
         self::$selector = $selector;
     }
