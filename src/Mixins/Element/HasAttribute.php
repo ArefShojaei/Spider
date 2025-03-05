@@ -71,13 +71,15 @@ trait HasMetaAttribute {
 trait HasAttribute {
     use HasClassAttribute, HasIdAttribute, HasMetaAttribute;
 
-    public function attr(string $key = null, string ...$values): string|array {
+    public function attr(string $key = null, string ...$values): string|array|null {
         $attributes = [];
 
         foreach ($this->node->attributes as $attribute) {
             if (isset($key) && count($values)) $this->addAttribute($key, $values);
             
             if (isset($key) && $attribute->nodeName === $key) return $attribute->textContent;
+            
+            if (isset($key) && $attribute->nodeName !== $key) return null;
 
 
             $attributes[$attribute->nodeName] = $attribute->nodeValue;

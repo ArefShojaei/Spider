@@ -24,7 +24,7 @@ interface ElementIdAttributeInterface {
 interface ElementAttributeInterface extends 
     ElementClassAttributeInterface, 
     ElementIdAttributeInterface {
-    public function attr(string $key = null, string ...$values): string|array;
+    public function attr(string $key = null, string ...$values): string|array|null;
 }
 
 interface ElementCleanerInterface {
