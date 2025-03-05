@@ -15,6 +15,8 @@ trait HasSearchable {
 
     private array $nodes = [];
 
+    private string $prefixSelector = "";
+
 
     public function find(string $selector): Element {
         $nodes = $this->query($selector);
@@ -27,11 +29,25 @@ trait HasSearchable {
     public function findAll(string $selector): Page {
         $nodes = $this->query($selector);
 
+        $this->prefixSelector = $selector;
+
         foreach ($nodes as $node) {
             $this->nodes[] = $node;
         }
 
         return $this;
+    }
+
+    /**
+     * Select internal child node element
+     * @param $selector child selector
+     */
+    public function select(string $selector, int $index): Element {
+        $nodes = $this->query(trim("{$this->prefixSelector} {$selector}"));
+    
+        $node = $nodes->item($index);
+
+        return new Element($node, $this->dom);
     }
 
     /**

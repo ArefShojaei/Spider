@@ -13,6 +13,8 @@ interface HasSearchableInterface {
     public function find(string $selector): Element;
     
     public function findAll(string $selector): Page;
+    
+    public function select(string $selector, int $index): Element;
 }
 
 interface HasIterableInterface {
