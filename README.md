@@ -1,6 +1,10 @@
-<img src="https://github.com/user-attachments/assets/4d307a59-9eff-4513-a2cc-f16375174244" />
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/4d307a59-9eff-4513-a2cc-f16375174244" width="400px" height="400px" />
+</div>
 
-<h1 align='center'>PHP web spider</h1>
+<h1 align='center'>
+    PHP web spider
+</h1>
 
 ```php
 <?php
