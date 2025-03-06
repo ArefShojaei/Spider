@@ -1,11 +1,13 @@
 <?php
 
+namespace Tests\Unit;
+
 use Spider\Spider;
 use PHPUnit\Framework\TestCase;
 use Spider\Page;
 
 
-class SpiderTest extends TestCase {
+final class SpiderTest extends TestCase {
     private const INTERFACE_IMPLEMENTED_COUNT = 2;
     
     private const HTML_URL = "http://imdb.com";
