@@ -10,9 +10,9 @@ use Spider\Page;
 final class SpiderTest extends TestCase {
     private const INTERFACE_IMPLEMENTED_COUNT = 2;
     
-    private const HTML_URL = "http://imdb.com";
+    public const  HTML_URL = "http://imdb.com";
     
-    private const HTML_FILE = "page.html";
+    public const HTML_FILE = "page.html";
 
 
     /**
