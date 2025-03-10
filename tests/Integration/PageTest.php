@@ -2,6 +2,7 @@
 
 namespace Tests\Integration;
 
+use DOMElement;
 use PHPUnit\Framework\TestCase;
 use Tests\Unit\SpiderTest;
 use Spider\{
@@ -54,7 +55,7 @@ final class PageTest extends TestCase {
      * @test
      * @depends loadHtmlByFileFromSpiderClass
      */
-    public function findTitleTagElementThatReturnsNodeElementFromElementClass(Page $page): void {
+    public function findTitleTagElementThatReturnsNodeElementFromElementInstance(Page $page): void {
         $node = $page->find("title");
 
         $this->assertIsObject($node);
@@ -134,9 +135,11 @@ final class PageTest extends TestCase {
      * @depends loadHtmlByFileFromSpiderClass
      */
     public function findAnchorTagElementThatReturnsLinkAttribute(Page $page): void {
-        $link = $page->find("a")->attr("href");
+        $attributes = $page->find("a")->attr();
 
-        $this->assertIsString($link);
+        $this->assertIsArray($attributes);
+        $this->assertArrayHasKey("href", $attributes);
+        $this->assertIsString($attributes["href"]);
     }
  
     /**
@@ -178,6 +181,89 @@ final class PageTest extends TestCase {
         $isSetClass = $page->find("a")->hasClass($class);
         
         $this->assertTrue($isSetClass);
+    }
+
+    /**
+     * @test
+     * @depends loadHtmlByFileFromSpiderClass
+     */
+    public function findAllAnchorTagElementsThatReturnPageInstance(Page $page): void {
+        $anchors = $page->findAll("a");
+
+        $this->assertInstanceOf(Page::class, $anchors);
+        $this->assertIsObject($anchors);
+    }
+
+    /**
+     * @test
+     * @depends loadHtmlByFileFromSpiderClass
+     */
+    public function findAnchorTagElementThatRemovesNodeElement(Page $page): void {
+        $page->find("a")->attr("data-name", "link");
+
+        $page->find("a")->remove();
+
+        $data = $page->find("a")->attr("data-name");
+
+        $this->assertNull($data);
+    }
+
+    /**
+     * @test
+     * @depends loadHtmlByFileFromSpiderClass
+     */
+    public function findAnchorTagElementThatClearsLinkTitleThatReturnsElementInstance(Page $page): void {
+        $result = $page->find("a")->empty();
+
+        $this->assertIsObject($result);
+        $this->assertInstanceOf(Element::class, $result);
+    }
+
+    /**
+     * @test
+     * @depends loadHtmlByFileFromSpiderClass
+     */
+    public function findAnchorElementThatReturnsParentNodeElement(Page $page): void {
+        $parent = $page->find("a")->parent();
+
+        $this->assertInstanceOf(DOMElement::class, $parent);
+        $this->assertIsObject($parent);
+    }
+
+    /**
+     * @test
+     * @depends loadHtmlByFileFromSpiderClass
+     */
+    public function findAllAnchorTagElementsThatCanBeIterableForEachNodeElement(Page $page): void {
+        $page->findAll("a")->each(function($key, $anchor) {
+            $this->assertIsObject($anchor);
+            $this->assertInstanceOf(Element::class, $anchor);
+            $this->assertIsInt($key);
+        });
+    }
+
+    /**
+     * @test
+     * @depends loadHtmlByFileFromSpiderClass
+     */
+    public function findAllAnchorTagElementsThatCanMapForEachNodeElementToSetDataAttribute(Page $page): void {
+        $anchors = $page->findAll("a")->map(function($key, $anchor) {
+            $anchor->attr("data-id", rand());
+
+            return $anchor;
+        });
+
+        $this->assertIsArray($anchors);
+    }
+
+    /**
+     * @test
+     * @depends loadHtmlByFileFromSpiderClass
+     */
+    public function findAllAnchorTagElementsThatCanFilterForEachNodeElementShouldHasSpiderClass(Page $page): void {
+        $anchors = $page->findAll("a")->filter(fn($key, $anchor) => $anchor->hasClass("spider"));
+
+        $this->assertIsArray($anchors);
     }
 
     /**
