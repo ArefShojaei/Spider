@@ -27,19 +27,6 @@ final class PageTest extends TestCase {
      * @test
      * @depends getSpiderInstance
      */
-    public function loadHtmlByUrlFromSpiderClass(Spider $spider): Page {
-        $page = $spider->loadHTML(SpiderTest::HTML_URL);
-
-        $this->assertInstanceOf(Page::class, $page);
-        $this->assertIsString($page->display());
-
-        return $page;
-    }
-
-    /**
-     * @test
-     * @depends getSpiderInstance
-     */
     public function loadHtmlByFileFromSpiderClass(Spider $spider): Page {
         $path = dirname(__DIR__, 2) . "\\docs\\" . SpiderTest::HTML_FILE;
 

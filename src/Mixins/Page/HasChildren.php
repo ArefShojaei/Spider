@@ -7,13 +7,6 @@ use Spider\Element;
 
 
 trait HasChildren {
-    private const FIRST_ELEMENT_CHILD = "FIRST";
-    
-    private const LAST_ELEMENT_CHILD = "LAST";
-    
-    private const DEFAULT_ELEMENT_CHILD_WITH_INDEX = "DEFAULT";
-
-
     public function children(): array {
         return $this->nodes;
     }

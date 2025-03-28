@@ -11,11 +11,7 @@ use Spider\{
 
 
 trait HasSearchable {
-    private const FIRST_ELEMENT_ITEM = 0;
 
-    private array $nodes = [];
-
-    private string $prefixSelector = "";
 
 
     public function find(string $selector): Element {

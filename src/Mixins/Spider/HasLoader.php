@@ -3,17 +3,15 @@
 namespace Spider\Mixins\Spider;
 
 use Exception;
-use Spider\{
-    Page,
-    Request,
-};
+use Spider\Page;
 
 
 trait HasLoader {
-    public function loadHTML(string $url): Page {
+    /**
+     * @param string $content HTML content
+     */
+    public function loadHTML(string $content): Page {
         try {
-            $content = Request::get($url);
-
             [$dom, $xpath] = $this->createDOM($content);
         
             return new Page($dom, $xpath);
@@ -22,9 +20,12 @@ trait HasLoader {
         }
     }
 
+    /**
+     * @param string $src HTML file
+     */
     public function loadFile(string $src): Page {
         try {
-            $content = Request::get($src);
+            $content = file_get_contents($src);
 
             [$dom, $xpath] = $this->createDOM($content);
 

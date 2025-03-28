@@ -10,8 +10,6 @@ use Spider\Page;
 final class SpiderTest extends TestCase {
     private const INTERFACE_IMPLEMENTED_COUNT = 2;
     
-    public const  HTML_URL = "http://imdb.com";
-    
     public const HTML_FILE = "page.html";
 
 
@@ -33,16 +31,6 @@ final class SpiderTest extends TestCase {
         $interfaces = class_implements(Spider::class);
 
         $this->assertCount(self::INTERFACE_IMPLEMENTED_COUNT, $interfaces);
-    }
-
-    /**
-     * @test
-     * @depends createInstance
-     */
-    public function loadHtmlByUrlThatReturnsPageInstance(Spider $spider): void {
-        $page = $spider->loadHTML(self::HTML_URL);
-
-        $this->assertInstanceOf(Page::class, $page);
     }
 
     /**

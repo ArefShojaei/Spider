@@ -16,6 +16,18 @@ use Spider\Mixins\Page\{
 final class Page implements PageInterface {
     use HasSearchable, HasIterable, HasChildren, HasHTMLEncodable;
 
+    private const FIRST_ELEMENT_CHILD = "FIRST";
+    
+    private const LAST_ELEMENT_CHILD = "LAST";
+    
+    private const DEFAULT_ELEMENT_CHILD_WITH_INDEX = "DEFAULT";
+
+    private const FIRST_ELEMENT_ITEM = 0;
+
+    private array $nodes = [];
+
+    private string $prefixSelector = "";
+    
 
     private DOMDocument $dom;
 
