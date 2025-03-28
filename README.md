@@ -21,6 +21,20 @@ $page->findAll("a")->each(function($key, $link) {
     echo "[LINK] " . $link->attr("href") . PHP_EOL;
 });
 ```
+<br/>
+
+## **Installation**
+
+#### Using Composer
+```bash
+composer create-project arefshojaei/spider
+```
+
+#### Using GIT
+```bash
+git clone https://github.com/ArefShojaei/Spider
+```
+
 
 
 > Find element
