@@ -1,15 +1,15 @@
 {
     "name": "arefshojaei/spider",
-    "description": "PHP web spider",
+    "description": "PHP web crawler",
     "type": "library",
     "license": "MIT",
+    "version": "v2.3.0",
     "keywords": [
         "Bot",
         "Crawler",
         "Spider",
         "HTML"
     ],
-    "version": "v2.3.0",
     "autoload": {
         "psr-4": {
             "Spider\\": "src/"
