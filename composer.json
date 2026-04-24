@@ -3,7 +3,7 @@
     "description": "PHP web crawler",
     "type": "library",
     "license": "MIT",
-    "version": "v2.3.0",
+    "version": "2.3.0",
     "keywords": [
         "Bot",
         "Crawler",
