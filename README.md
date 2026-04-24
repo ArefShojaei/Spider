@@ -3,7 +3,7 @@
 </div>
 
 <h1 align='center'>
-    PHP web spider
+    PHP web crawler
 </h1>
 
 ```php
@@ -32,7 +32,7 @@ composer create-project arefshojaei/spider
 
 #### Using GIT
 ```bash
-git clone https://github.com/ArefShojaei/Spider
+git clone https://github.com/ArefShojaei/Spider.git
 ```
 
 
