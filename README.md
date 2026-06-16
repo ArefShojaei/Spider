@@ -1,160 +1,325 @@
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/4d307a59-9eff-4513-a2cc-f16375174244" width="400px" height="400px" />
+    <img width="420"  alt="logo" src="https://github.com/user-attachments/assets/cbdec017-c2c0-48cf-8def-9466bf479be7" />
+
+
+# 🕷️ Spider - PHP Web Crawler & HTML Parser
+
+A lightweight and powerful PHP web crawler inspired by jQuery-style DOM manipulation.
+
+Fetch web pages, parse HTML documents, search elements with CSS selectors, manipulate the DOM, and export modified pages with an elegant and simple API.
+
 </div>
 
-<h1 align='center'>
-    PHP web crawler
-</h1>
+---
+
+## ✨ Features
+
+* 🌐 Load and parse any HTML web page
+* 🔍 CSS selector-based element searching
+* 📄 Extract text, HTML, and attributes
+* 🔁 Iterate over multiple DOM elements
+* 🧹 Remove and clean HTML elements
+* 🏗️ Modify the DOM structure dynamically
+* 🎨 Manage CSS classes and IDs
+* 💾 Export modified HTML documents
+* ⚡ Lightweight and dependency-free PHP implementation
+
+---
+
+# 📥 Installation
+
+## Install with Composer
+
+```bash
+composer require arefshojaei/spider
+```
+
+## Clone from GitHub
+
+```bash
+git clone https://github.com/ArefShojaei/Spider.git
+cd Spider
+```
+
+---
+
+# 🚀 Quick Start
+
+Fetch a page and extract its content:
 
 ```php
 <?php
 
 use Spider\Spider;
 
-$spider = new Spider;
+$spider = new Spider();
 
-$page = $spider->loadHTML("http://google.com");
+$page = $spider->loadHTML("https://google.com");
 
 echo $page->find("title")->text() . PHP_EOL;
 
-$page->findAll("a")->each(function($key, $link) {
+$page->findAll("a")->each(function ($key, $link) {
     echo "[LINK] " . $link->attr("href") . PHP_EOL;
 });
 ```
-<br/>
 
-## **Installation**
+---
 
-#### Using Composer
-```bash
-composer create-project arefshojaei/spider
-```
+# 🔎 Finding Elements
 
-#### Using GIT
-```bash
-git clone https://github.com/ArefShojaei/Spider.git
-```
+Search DOM elements using CSS selectors.
 
-
-
-> Find element
-* find()
-* findAll()
+## Find a single element
 
 ```php
 $page->find("a");
+$page->find(".product");
+$page->find("#header");
+```
 
+## Find multiple elements
+
+```php
+$page->findAll("a");
 $page->findAll(".product");
 ```
 
-> Iterate for each eleemnt
-* each()
-* map()
-* filter()
+---
+
+# 🔁 Iterating Elements
+
+Perform operations on element collections.
+
+## each()
+
+Loop through every element:
 
 ```php
-$page->findAll("a")->each(function($key, $anchor) {
-    echo "[LINK] " . $anchor->attr("href") . PHP_EOL;
-    echo "[TITLE] " . $anchor->text() . PHP_EOL;
-    echo "[HTML] " . $anchor->html() . PHP_EOL;
+$page->findAll("a")->each(function ($key, $anchor) {
+    echo $anchor->text();
 });
+```
 
-# ----------------------------------------
-$anchors = $page->findAll("a")->map(function($key, $anchor) {
+## map()
+
+Transform elements:
+
+```php
+$anchors = $page->findAll("a")->map(function ($key, $anchor) {
     $anchor->attr("data-id", rand());
 
     return $anchor;
 });
-
-var_dump($anchors);
-
-# ----------------------------------------
-$filteredAnchors = $page->findAll("a")->filter(function($key, $anchor) => $anchor->attr("data-id")); 
-
-var_dump($filteredAnchors);
 ```
 
+## filter()
 
-> Element traversing
-* parent()
-* after()
-* before()
-* append()
-* prepend()
+Filter elements by a condition:
 
 ```php
-$parentNode = $page->find(".product")->parent();
-
-# Add parent Element
-$page->find(".product")->after("<p>After Element</p>");
-$page->find(".product")->before("<p>Before Element</p>");
-
-# Add child (local) element
-$page->find(".product")->append("<p>Append Element</p>");
-$page->find(".product")->prepend("<p>Prepend Element</p>");
+$links = $page->findAll("a")->filter(
+    fn($key, $anchor) => $anchor->attr("href")
+);
 ```
 
-> Element cleaner
-* empty()
-* remove()
+---
+
+# 🌳 DOM Traversing
+
+Navigate and modify element relationships.
+
+## Parent element
 
 ```php
-# Clean element content
+$parent = $page->find(".product")->parent();
+```
+
+## Insert sibling elements
+
+```php
+$page->find(".product")
+     ->before("<p>Before Element</p>");
+
+$page->find(".product")
+     ->after("<p>After Element</p>");
+```
+
+## Insert child elements
+
+```php
+$page->find(".product")
+     ->append("<p>New Child</p>");
+
+$page->find(".product")
+     ->prepend("<p>First Child</p>");
+```
+
+---
+
+# 🧹 Cleaning Elements
+
+Remove content or complete elements.
+
+## Empty content
+
+```php
 $page->find("p")->empty();
+```
 
-# Remove element from the DOM
+## Remove element
+
+```php
 $page->find("p")->remove();
 ```
 
-> Element content
-* text()
-* html()
+---
+
+# 📄 Working with Content
+
+## Get text or HTML
 
 ```php
-# Getter
 $text = $page->find("p")->text();
-$html = $page->find("p")->html();
 
-# Setter
-$newText = $page->find("p")->text("New text content");
-$newHtml = $page->find("p")->html("<p id='spider'>New html content</p>");
+$html = $page->find("p")->html();
 ```
 
-> Element attribute
-* attr()
-* addClass()
-* removeClass()
-* hasClass()
-* addId()
-* removeId()
-* hasId()
+## Update content
 
 ```php
-# Getter
+$page->find("p")->text("New text");
+
+$page->find("p")->html("<strong>New HTML</strong>");
+```
+
+---
+
+# 🏷️ Working with Attributes
+
+## Read attributes
+
+```php
 $attributes = $page->find("a")->attr();
 
 $link = $page->find("a")->attr("href");
-
-# Setter
-$page->find("a")->attr("data-id", rand());
-
-# Class
-$page->find("p")->addClass("spider");
-$page->find("p")->removeClass("spider");
-$page->find("p")->hasClass("spider");
-
-# ID
-$page->find("p")->addID("spider");
-$page->find("p")->removeID("spider");
-$page->find("p")->hasID("spider");
 ```
 
+## Set attributes
 
-> Export current page content
 ```php
-$filename = "app";
+$page->find("a")->attr("data-id", 123);
+```
 
-$path = __DIR__ . "\\html\\" . $filename . rand() . ".html";
+---
+
+# 🎨 CSS Classes & IDs
+
+## Classes
+
+```php
+$page->find("p")->addClass("active");
+
+$page->find("p")->removeClass("active");
+
+$page->find("p")->hasClass("active");
+```
+
+## IDs
+
+```php
+$page->find("p")->addID("article");
+
+$page->find("p")->removeID("article");
+
+$page->find("p")->hasID("article");
+```
+
+---
+
+# 💾 Export HTML
+
+Save the current DOM document to a file.
+
+```php
+$filename = "page";
+
+$path = __DIR__ . "/html/" . $filename . rand() . ".html";
 
 $page->export($path);
 ```
+
+---
+
+# 💡 Example Use Cases
+
+Spider can be used for:
+
+* Web scraping and data extraction
+* SEO analysis
+* Content migration
+* HTML cleaning and transformation
+* Static website processing
+* Automated testing of HTML pages
+* Learning how browser DOM engines work
+
+---
+
+# 🔥 Why Spider?
+
+Spider brings the simplicity of jQuery-style DOM APIs into PHP.
+
+Instead of dealing with complex DOMDocument operations, you can navigate and manipulate HTML documents using a clean and expressive syntax.
+
+It is a great educational project for learning:
+
+* Web crawling concepts
+* HTML parsing
+* DOM tree manipulation
+* CSS selector engines
+* Collection processing
+* Parser design
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+
+2. Create a feature branch:
+
+```bash
+git checkout -b feature/amazing-feature
+```
+
+3. Commit your changes:
+
+```bash
+git commit -m "Add amazing feature"
+```
+
+4. Push your branch:
+
+```bash
+git push origin feature/amazing-feature
+```
+
+5. Open a Pull Request.
+
+---
+
+# 👨‍💻 Author
+
+**Aref Shojaei**
+- 📧 Email: [arefshojaei82@gmail.com](mailto:arefshojaei82@gmail.com)
+- 🐙 GitHub: [@ArefShojaei](https://github.com/ArefShojaei)
+- 📦 Packagist: [arefshojaei/spider](https://packagist.org/packages/arefshojaei/Spider)
+
+---
+
+# ⭐ Show Your Support
+
+If this project helps you understand web crawling, HTML parsing, and DOM manipulation, consider giving it a **Star ⭐ on GitHub**.
+
+Your support motivates future improvements.
