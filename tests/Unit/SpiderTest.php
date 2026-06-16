@@ -2,9 +2,8 @@
 
 namespace Tests\Unit;
 
-use Spider\Spider;
 use PHPUnit\Framework\TestCase;
-use Spider\Page;
+use Spider\{Spider, Page};
 
 
 final class SpiderTest extends TestCase {
@@ -38,7 +37,7 @@ final class SpiderTest extends TestCase {
      * @depends createInstance
      */
     public function loadHtmlByFileThatReturnsPageInstance(Spider $spider): void {
-        $path = dirname(__DIR__, 2) . "\\docs\\" . self::HTML_FILE;
+        $path = dirname(__DIR__, 2) . "/docs/" . self::HTML_FILE;
         
         $page = $spider->loadFile($path);
 

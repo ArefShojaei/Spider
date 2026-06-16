@@ -28,7 +28,7 @@ final class PageTest extends TestCase {
      * @depends getSpiderInstance
      */
     public function loadHtmlByFileFromSpiderClass(Spider $spider): Page {
-        $path = dirname(__DIR__, 2) . "\\docs\\" . SpiderTest::HTML_FILE;
+        $path = dirname(__DIR__, 2) . "/docs/" . SpiderTest::HTML_FILE;
 
         $page = $spider->loadFile($path);
 
@@ -258,12 +258,14 @@ final class PageTest extends TestCase {
      * @depends loadHtmlByFileFromSpiderClass
      */
     public function exportHtmlContent(Page $page): void {
-        $path = dirname(__DIR__, 2) . "\\docs\\" . self::DIST_HTML_FILE;
+        $path = dirname(__DIR__, 2) . "/docs/" . self::DIST_HTML_FILE;
         
         $isSavedFile = $page->export($path);
 
         $this->assertTrue($isSavedFile);
         $this->assertFileExists($path);
         $this->assertIsString(file_get_contents($path));
+    
+        unlink($path);
     }
 }
